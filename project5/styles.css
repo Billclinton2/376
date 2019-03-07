@@ -1,62 +1,52 @@
-/*
- * Prepares the game with an initial dice roll.
- */
-$(document).ready(function () {
-    rollDice();
-});
-
-/*
- * Rolls both dice at the same time.
- */
-function rollDice() {
-    var roll1 = rollDie("d1");
-    var roll2 = rollDie("d2");
-    var total = roll1 + roll2;
-    console.log("Total: " + total);
+input, button{
+  font-family: Arial, sans-serif;
+  font-size: 14pt;
+}
+#background {
+    fill: #2db300;
 }
 
-/*
- * Rolls the given die which updates the pips and returns the number rolled.
- *
- * dieNum - the ID of the die to roll
- */
-function rollDie(dieNum) {
-    // Step 1: hide every pip
-    $("#" + dieNum + " ~ .pip").css("visibility", "hidden");
+#controls {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14pt;
+    width: 500px;
+}
 
-    // Step 2: generate a random number between 1 and 6 (inclusive)
-    var roll = Math.ceil(Math.random() * 6);
-    console.log(dieNum + ": " + roll);
+#message {
+    fill: #ff0000;
+    font-family: Arial, sans-serif;
+    font-size: 18pt;
+    text-anchor: middle;
+}
 
-    // Step 3: show the appropriate pips based on the roll
-    if (roll == 1) {
-        $("#" + dieNum + "p4").css("visibility", "visible");
-    } else if (roll == 2) {
-        $("#" + dieNum + "p1").css("visibility", "visible");
-        $("#" + dieNum + "p7").css("visibility", "visible");
-    } else if (roll == 3) {
-        $("#" + dieNum + "p1").css("visibility", "visible");
-        $("#" + dieNum + "p4").css("visibility", "visible");
-        $("#" + dieNum + "p7").css("visibility", "visible");
-    } else if (roll == 4) {
-        $("#" + dieNum + "p1").css("visibility", "visible");
-        $("#" + dieNum + "p3").css("visibility", "visible");
-        $("#" + dieNum + "p5").css("visibility", "visible");
-        $("#" + dieNum + "p7").css("visibility", "visible");
-    } else if (roll == 5) {
-        $("#" + dieNum + "p1").css("visibility", "visible");
-        $("#" + dieNum + "p3").css("visibility", "visible");
-        $("#" + dieNum + "p4").css("visibility", "visible");
-        $("#" + dieNum + "p5").css("visibility", "visible");
-        $("#" + dieNum + "p7").css("visibility", "visible");
-    } else  { // roll == 6
-        $("#" + dieNum + "p1").css("visibility", "visible");
-        $("#" + dieNum + "p2").css("visibility", "visible");
-        $("#" + dieNum + "p3").css("visibility", "visible");
-        $("#" + dieNum + "p5").css("visibility", "visible");
-        $("#" + dieNum + "p6").css("visibility", "visible");
-        $("#" + dieNum + "p7").css("visibility", "visible");
-    }
+#point {
+    fill: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 24pt;
+    text-anchor: middle;
+}
 
-    return roll;
+#puck {
+    fill: #000000;
+    stroke: #ffffff;
+}
+#winnings{
+  font-weight: bold;
+}
+
+.die {
+    fill: #ffffff;
+    stroke-width: 3;
+    stroke: #000000;
+}
+
+.pip {
+    stroke: #000000;
+    fill: #000000;
+    visibility: hidden;
+}
+.spacer{
+  margin-left: 25px;
+
 }

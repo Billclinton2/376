@@ -1,18 +1,73 @@
-/*
- * Prepares the game with an initial dice roll.
- */
-$(document).ready(function () {
-    rollDice();
-});
+var MINIMUM_BET = 5;
+var STARTING_FUNDS = 50;
+
+var point = 0;
+var bet = 0;
+var winnings = STARTING_FUNDS;
+
 
 /*
- * Rolls both dice at the same time.
+ * Checks the result of the current roll and declare a win, loss, or continuation.
  */
+function checkRoll(roll) {
+    var message = "";
+
+    if (point == 0) { // New round
+        if (roll == 7 || roll == 11) {
+            endRound(true);
+        } else if (roll == 2 || roll == 3 || roll == 12) {
+            endRound(false);
+        } else {
+            $("#point").text(roll);
+            point = roll;
+        }
+    } else { // Existing round
+        if (roll == point) {
+            endRound(true);
+        } else if (roll == 7) {
+            endRound(false);
+        }
+    }
+}
+
+function endRound(win){
+
+    if (win){
+      $("#message").text("You win!");
+      winnings += bet;
+
+    } else {
+      $("#message").text("You Lose!");
+      winnings -= bet;
+    }
+    $("#point").text("X");
+    $("#bet").val("");
+    $("#bet").prop("disabled", false);
+    $("#winnings").text("$" + winnings);
+
+
+    bet = 0;
+    point = 0;
+
+
+}
+
+
 function rollDice() {
-    var roll1 = rollDie("d1");
-    var roll2 = rollDie("d2");
-    var total = roll1 + roll2;
-    console.log("Total: " + total);
+    if (validateBet()) {
+
+          $("#message").text("");
+
+          var roll1 = rollDie("d1");
+          var roll2 = rollDie("d2");
+          var total = roll1 + roll2;
+
+          console.log("Total: " + total);
+
+          checkRoll(total);
+    }else {
+      $("#message").text("You must bet between $" + MINIMUM_BET + " and $" +winnings);
+    }
 }
 
 /*
@@ -59,4 +114,16 @@ function rollDie(dieNum) {
     }
 
     return roll;
+}
+
+function validateBet(){
+    bet = parseInt($("#bet").val());
+
+    if (isNaN(bet) || bet < MINIMUM_BET || bet > winnings) {
+      return false;
+    } else {
+      $("#bet").prop("disabled", true);
+      return true;
+
+    }
 }
